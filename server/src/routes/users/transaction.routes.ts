@@ -1,5 +1,5 @@
 import { Router } from "express";
-import TransactionController from "../../controller/transaction.controller";
+import TransactionController from "../../controller/users/transaction.controller";
 import schemaValidator from "../../middlewares/schemaValidator";
 import { NewTransactionSchema, UpdateTransactionSchema } from "../../schemas/transaction.schema";
 

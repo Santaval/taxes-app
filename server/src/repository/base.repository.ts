@@ -69,6 +69,19 @@ export default class BaseRepository {
   }
 
   /**
+   * Finds all records in the specified table that match the given field and value.
+   */
+  static async findAll(table: string, fieldToSearch: string, value: string): Promise<any[]> {
+    try {
+      const rows = await this.query(`SELECT * FROM ${table} WHERE ${fieldToSearch} = ?`, [value]);
+      return rows;
+    } catch (error: any) {
+      console.error("Error finding records: ", error);
+      throw new Error("500 | DB Error: " + error.message);
+    }
+  }
+
+  /**
    * Inserts a new record into the specified table.
    *
    * @param {string[]} fields - The fields to insert values into.

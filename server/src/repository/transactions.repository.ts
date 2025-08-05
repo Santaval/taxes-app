@@ -40,6 +40,10 @@ export default class TransactionRepository extends BaseRepository {
     return super.find(this.TABLE, fieldToSearch, value);
   }
 
+  static async findAll(fieldToSearch: string, value: string): Promise<Transaction[]> {
+    return super.findAll(this.TABLE, fieldToSearch, value);
+  }
+
   /**
    * Creates a new transaction
    */

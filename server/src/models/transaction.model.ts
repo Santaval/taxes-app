@@ -17,6 +17,10 @@ export default class TransactionModel {
     return TransactionRepository.find(fieldToSearch, value);
   }
 
+  static async findAll(fieldToSearch: string, value: string): Promise<Transaction[]> {
+    return TransactionRepository.findAll(fieldToSearch, value) as Promise<Transaction[]>;
+  }
+
   /**
    * Creates a new transaction
    */
@@ -27,7 +31,7 @@ export default class TransactionModel {
       id,
     };
     await TransactionRepository.create(transaction);
-    return this.find("id", id);
+    return this.find("id", id) as Promise<Transaction | null>;
   }
 
   /**
@@ -38,7 +42,7 @@ export default class TransactionModel {
     if (fields.length === 0) throw new Error("No fields to update.");
     const values = Object.values(data);
     await TransactionRepository.update(fields, values, id);
-    return this.find("id", id);
+    return this.find("id", id) as Promise<Transaction | null>;
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import TransactionModel from "../models/transaction.model";
-import { NewTransactionSchema, UpdateTransactionSchema } from "../schemas/transaction.schema";
+import TransactionModel from "../../models/transaction.model";
+import { NewTransactionSchema, UpdateTransactionSchema } from "../../schemas/transaction.schema";
 import { User } from "@/types/User";
 
 export default class TransactionController {
