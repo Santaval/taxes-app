@@ -6,12 +6,14 @@ import adminUsersRouter from "./admin/users.routes";
 import companiesRouter from "./users/companies.routes";
 import filesRouter from "./users/file.routes";
 import taxProfileRouter from "./users/taxProfile.routes";
+import transactionsRouter from "./users/transaction.routes";
 const router = Router();
 
 router.use("/auth", authRouter);
 router.use("/profile", isAuth, profileRouter);
 router.use("/companies", isAuth, companiesRouter);
 router.use("/tax-profile", isAuth, taxProfileRouter);
+router.use("/transactions", isAuth, transactionsRouter);
 router.use("/files", isAuth, filesRouter);
 
 
