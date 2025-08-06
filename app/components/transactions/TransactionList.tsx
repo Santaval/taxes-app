@@ -101,16 +101,12 @@ export default function TransactionList({transactions} : ListProps) {
       data={transactions}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
-      contentContainerStyle={styles.list}
       showsVerticalScrollIndicator={false}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  list: {
-    padding: Spacing.md,
-  },
   card: {
     flexDirection: 'row',
     backgroundColor: Colors.componentBg,
