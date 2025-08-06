@@ -2,14 +2,14 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { router } from 'expo-router';
 import { showToast } from '@/utils/toast';
 import TransactionsService from '@/services/TransactionsService';
-import { Transaction } from '@/types/Transaction';
+import { NewTransaction, Transaction } from '@/types/Transaction';
 import { useAuth } from './AuthContext';
 
 interface TransactionsContextData {
   transactions: Transaction[];
   loading: boolean;
   error: string | null;
-  requestWithdrawal: (amount: number) => Promise<void>;
+  createTransaction: (data: NewTransaction) => Promise<void>;
   refreshTransactions: () => Promise<void>;
 }
 
@@ -35,9 +35,9 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const requestWithdrawal = async (amount: number) => {
+  const createTransaction = async (data: NewTransaction) => {
     try {
-      const transaction = await TransactionsService.withdraw(amount);
+      const transaction = await TransactionsService.create(data);
       setTransactions([transaction, ...transactions]);
       router.back();
     } catch (error) {
@@ -58,7 +58,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
         transactions, 
         loading, 
         error, 
-        requestWithdrawal,
+        createTransaction,
         refreshTransactions: fetchTransactions
       }}
     >

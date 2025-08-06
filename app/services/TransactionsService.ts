@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./api";
-import { Transaction } from "@/types/Transaction";
+import { NewTransaction, Transaction } from "@/types/Transaction";
 
 interface ApiErrorResponse {
   message: string;
@@ -41,16 +41,16 @@ export default class TransactionsService {
   }
 
   /**
-   * Requests a withdrawal of a specified amount.
+   * Creates a new transaction.
    * 
-   * @param {number} amount - The amount to withdraw.
+   * @param {NewTransaction} data - The transaction data.
    * @returns {Promise<Transaction>} A promise that resolves to the transaction.
    * @throws {Error} If the request fails.
    */
-  static async withdraw(amount: number) : Promise<Transaction> {
+  static async create(data: NewTransaction) : Promise<Transaction> {
     try {
-      const { data } = await api.post("/transactions/withdrawal", { amount });
-      return data;
+      const { data: response } = await api.post("/transactions", data);
+      return response;
     } catch (error) {
       const axiosError = error as AxiosError<ApiErrorResponse>;
       throw new Error(axiosError.response?.data?.message || axiosError.message);

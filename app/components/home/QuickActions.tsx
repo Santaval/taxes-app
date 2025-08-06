@@ -17,7 +17,7 @@ const QUICK_ACTIONS: QuickAction[] = [
     id: 'new-invoice',
     label: 'Nueva Factura',
     icon: 'file-invoice',
-    route: '/invoices/new',
+    route: '/transactions/new',
     color: '#4CAF50', // Verde suave
   },
   {

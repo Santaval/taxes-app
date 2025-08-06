@@ -10,3 +10,5 @@ export type Transaction = {
   date: string; // ISO date string (YYYY-MM-DD)
   createdAt: string; // ISO date string
 };
+
+type NewTransaction = Omit<Transaction, 'id' | 'userID' | 'createdAt'>;
