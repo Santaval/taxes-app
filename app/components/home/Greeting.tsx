@@ -17,6 +17,7 @@ export default function Greeting() {
 const styles = StyleSheet.create({
   welcomeSection: {
     marginBottom: Spacing.lg,
+    padding: Spacing.lg,
   },
   greetingText: {
     fontSize: Typography.size.md,

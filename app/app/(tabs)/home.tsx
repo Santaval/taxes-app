@@ -5,11 +5,13 @@ import QuickActions from '@/components/home/QuickActions';
 import FinancialSummary from '@/components/home/FinancialSummary';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IvaSummary from '@/components/home/IVASummary';
+import Greeting from '@/components/home/Greeting';
 
 export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <Greeting />
         <FinancialSummary />
         <IvaSummary />
         <QuickActions />
