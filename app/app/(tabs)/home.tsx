@@ -26,34 +26,23 @@ export default function Home() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor={Colors.primary}
-            colors={[Colors.primary]}
-          />
-        }
-      >
+
         <ScreenLayout
         title='Inicio'
         headerContent={ <FinancialSummary key={`financial-${refreshKey}`} />}
         contentTitle=''
       >
-       
-      <QuickActions /> 
-      </ScreenLayout>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[Colors.primary]}
+          />
+        }
+      >
+        <QuickActions />
       </ScrollView>
-      
-    </SafeAreaView>
+    </ScreenLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.gradientColors.start,
-  },
-});
