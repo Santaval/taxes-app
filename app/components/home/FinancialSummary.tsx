@@ -1,85 +1,66 @@
 import React from 'react';
 import { StyleSheet, View, Text} from 'react-native';
-import { Colors } from '@/config/theme';
+import { BorderRadius, Colors, Spacing } from '@/config/theme';
 import formatCurrency from '@/utils/currency';
 import useReport from '@/hooks/useReport';
 
 
 export default function FinancialSummary() {
-  const { reportData } = useReport("balance")
+  const { reportData:balanceReport } = useReport("balance")
+  const { reportData:ivaReport } = useReport('iva');
+
 
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Resumen Financiero</Text>
-      </View>
-
       <View style={styles.statsContainer}>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Ingresos</Text>
-          <Text style={[styles.statValue, styles.incomeText]}>
-            {formatCurrency(reportData?.income || 0)}
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Gastos</Text>
-          <Text style={[styles.statValue, styles.expensesText]}>
-            {formatCurrency(reportData?.expenses || 0)}
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Balance</Text>
-          <Text
-            style={[
-              styles.statValue,
-              reportData?.balance || 0 >= 0 ? styles.incomeText : styles.expensesText,
-            ]}
-          >
-            {formatCurrency(reportData?.balance || 0)}
-          </Text>
+       <View style={styles.statsRow}>
+          <StatItem label="Ingresos" value={balanceReport?.income || 0} isIncome={true} />
+          <StatItem label="Gastos" value={balanceReport?.expenses || 0} isIncome={false} />
+          <StatItem label="Balance" value={balanceReport?.balance || 0} isIncome={(balanceReport?.balance || 0) >= 0} />
+       </View>
+
+        <View style={styles.statsRow}>
+          <StatItem label="IVA Cobrado" value={ivaReport?.vatCharged || 0} isIncome={true} />
+        <StatItem label="IVA Deducible" value={ivaReport?.vatDeductible || 0} isIncome={false} />
+        <StatItem label="IVA Neto" value={ivaReport?.vatNet || 0} isIncome={(ivaReport?.vatNet || 0) >= 0} />
         </View>
       </View>
+  );
+}
+
+
+
+function StatItem ({ label, value, isIncome }: { label: string; value: number; isIncome: boolean }) {
+  return (
+    <View style={styles.statItem}>
+      <Text style={styles.statLabel}>{label}</Text>
+      <Text style={[styles.statValue, isIncome ? styles.incomeText : styles.expensesText]}>
+        {formatCurrency(value)}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 16,
-    marginVertical: 8,
-    borderRadius: 16,
-    padding: 16,
-    backgroundColor: "#000",
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.white,
-  },
-  monthSelector: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: Colors.componentBg,
-  },
-  monthText: {
-    color: Colors.white,
-    fontWeight: '500',
-  },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 24,
+    backgroundColor: Colors.primaryDark,
+    borderRadius: BorderRadius.lg,
+    paddingVertical: Spacing.lg,
+    flexWrap: 'wrap',
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: Spacing.md,
   },
   statItem: {
     flex: 1,
     alignItems: 'center',
+    width: '33%',
   },
   statLabel: {
     fontSize: 12,
@@ -91,12 +72,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   incomeText: {
-    color: Colors.success,
+    color: Colors.white,
   },
   expensesText: {
-    color: Colors.error,
+    color: Colors.white,
   },
   chartContainer: {
     alignItems: 'center',
   },
 });
+
+        
+
+

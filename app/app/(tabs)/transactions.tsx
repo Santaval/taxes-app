@@ -5,7 +5,6 @@ import TransactionList from '@/components/transactions/TransactionList'
 import { Colors } from '@/config/theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTransactions } from '@/contexts/TransactionsContext'
-import LineChart from '@/components/charts/BarsChart'
 
 
 export default function Transactions() {

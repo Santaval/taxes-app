@@ -4,9 +4,8 @@ import { Colors } from '../../config/theme';
 import QuickActions from '@/components/home/QuickActions';
 import FinancialSummary from '@/components/home/FinancialSummary';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import IvaSummary from '@/components/home/IVASummary';
-import Greeting from '@/components/home/Greeting';
 import { useFocusEffect } from 'expo-router';
+import ScreenLayout from '@/components/ui/ScreenLayout';
 
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
@@ -38,11 +37,16 @@ export default function Home() {
           />
         }
       >
-        <Greeting />
-        <FinancialSummary key={`financial-${refreshKey}`} />
-        <IvaSummary key={`iva-${refreshKey}`} />
-        <QuickActions />
+        <ScreenLayout
+        title='Inicio'
+        headerContent={ <FinancialSummary key={`financial-${refreshKey}`} />}
+        contentTitle=''
+      >
+       
+      <QuickActions /> 
+      </ScreenLayout>
       </ScrollView>
+      
     </SafeAreaView>
   );
 }
