@@ -1,6 +1,9 @@
 export const Colors = {
   // Primary Colors
   primary: '#0066cc',
+
+  success: '#28a745',
+  error: '#dc3545',
   
   // Background Colors
   gradientColors: {
@@ -27,6 +30,7 @@ export const BorderRadius = {
   sm: 4,
   md: 8,
   lg: 20,
+  circle: 9999, // For circular elements
 }
 
 export const Typography = {
