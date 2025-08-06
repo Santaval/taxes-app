@@ -11,6 +11,7 @@ interface TransactionsContextData {
   error: string | null;
   createTransaction: (data: NewTransaction) => Promise<void>;
   updateTransaction: (id: string, data: Partial<NewTransaction>) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
   refreshTransactions: () => Promise<void>;
   expenses: Transaction[];
   incomes: Transaction[];
@@ -65,6 +66,17 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const deleteTransaction = async (id: string) => {
+    try {
+      await TransactionsService.delete(id);
+      setTransactions(transactions.filter(t => t.id !== id));
+      router.replace('/(tabs)/transactions');
+    } catch (error) {
+      showToast.error(error instanceof Error ? error.message : "Error al eliminar la transacción");
+      setError(error as string);
+    }
+  };
+
   useEffect(() => {
     if (user) { 
       fetchTransactions();
@@ -79,6 +91,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
         error, 
         createTransaction,
         updateTransaction,
+        deleteTransaction,
         refreshTransactions: fetchTransactions,
         expenses,
         incomes

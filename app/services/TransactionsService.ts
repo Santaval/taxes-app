@@ -74,4 +74,20 @@ export default class TransactionsService {
       throw new Error(axiosError.response?.data?.message || axiosError.message);
     }
   }
+
+  /**
+   * Deletes a transaction.
+   * 
+   * @param {string} id - The ID of the transaction to delete.
+   * @returns {Promise<void>} A promise that resolves when the transaction is deleted.
+   * @throws {Error} If the request fails.
+   */
+  static async delete(id: string): Promise<void> {
+    try {
+      await api.delete(`/transactions/${id}`);
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiErrorResponse>;
+      throw new Error(axiosError.response?.data?.message || axiosError.message);
+    }
+  }
 }

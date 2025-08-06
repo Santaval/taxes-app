@@ -1,7 +1,8 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ScreenLayout from "@/components/ui/ScreenLayout";
 import { useEffect, useState } from "react";
+import { useTransactions } from "@/contexts/TransactionsContext";
 import moment from "moment";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Transaction } from "@/types/Transaction";
@@ -103,6 +104,7 @@ export default function TransactionDetailScreen() {
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const { deleteTransaction } = useTransactions();
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -199,7 +201,23 @@ export default function TransactionDetailScreen() {
           <TouchableOpacity 
             style={[styles.actionButton, { backgroundColor: Colors.error + '15' }]}
             onPress={() => {
-              // Implement delete functionality
+              Alert.alert(
+                'Eliminar transacción',
+                '¿Estás seguro de que deseas eliminar esta transacción? Esta acción no se puede deshacer.',
+                [
+                  {
+                    text: 'Cancelar',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Eliminar',
+                    style: 'destructive',
+                    onPress: () => {
+                      deleteTransaction(id as string);
+                    },
+                  },
+                ]
+              );
             }}
           >
             <IconSymbol name="trash.fill" size={20} color={Colors.error} />
