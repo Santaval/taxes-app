@@ -1,7 +1,7 @@
 export const Colors = {
   // Primary Colors
   primary: '#0066cc',
-
+  white: '#ffffff',
   success: '#28a745',
   error: '#dc3545',
   

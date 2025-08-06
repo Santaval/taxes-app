@@ -5,8 +5,8 @@ import formatCurrency from '@/utils/currency';
 import useReport from '@/hooks/useReport';
 
 
-export default function FinancialSummary() {
-  const { reportData } = useReport("balance")
+export default function IvaSummary() {
+  const { reportData } = useReport("iva")
 
 
   if (!reportData) {
@@ -16,31 +16,31 @@ export default function FinancialSummary() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Resumen Financiero</Text>
+        <Text style={styles.title}>Resumen IVA</Text>
       </View>
 
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Ingresos</Text>
+          <Text style={styles.statLabel}>IVA Cobrado</Text>
           <Text style={[styles.statValue, styles.incomeText]}>
-            {formatCurrency(reportData.income)}
+            {formatCurrency(reportData.vatCharged)}
           </Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Gastos</Text>
+          <Text style={styles.statLabel}>IVA Deducible</Text>
           <Text style={[styles.statValue, styles.expensesText]}>
-            {formatCurrency(reportData.expenses)}
+            {formatCurrency(reportData.vatDeductible)}
           </Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Balance</Text>
+          <Text style={styles.statLabel}>IVA Neto</Text>
           <Text
             style={[
               styles.statValue,
-              reportData.balance >= 0 ? styles.incomeText : styles.expensesText,
+              reportData.vatNet >= 0 ? styles.incomeText : styles.expensesText,
             ]}
           >
-            {formatCurrency(reportData.balance)}
+            {formatCurrency(reportData.vatNet)}
           </Text>
         </View>
       </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 16,
     padding: 16,
-    backgroundColor: "#000",
+    backgroundColor: "#f4f4f4ff",
   },
   header: {
     flexDirection: 'row',
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '600',
-    color: Colors.white,
+    color: Colors.text,
   },
   monthSelector: {
     padding: 8,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.componentBg,
   },
   monthText: {
-    color: Colors.white,
+    color: Colors.text,
     fontWeight: '500',
   },
   statsContainer: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 12,
-    color: Colors.white,
+    color: Colors.text,
     marginBottom: 4,
   },
   statValue: {
