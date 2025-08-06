@@ -15,8 +15,6 @@ export default class ReportsModel {
     let vatCharged = 0;
     let vatDeductible = 0;
 
-   
-
     for (const tx of transactions) {
       tx.amount = parseFloat(tx.amount.toString());
       tx.vatRate = parseFloat(tx.vatRate.toString());
@@ -40,5 +38,31 @@ export default class ReportsModel {
     vatDeductible: Math.round(vatDeductible),
     vatNet: Math.round(vatCharged - vatDeductible)
   };
+  }
+
+  /**
+   * Generates an income and expenses report for a given user, month, and year.
+   */
+  static async incomeAndExpenses(userId: string, month: number, year: number): Promise<any> {
+    const transactions = await TransactionModel.findAll("userID", userId);
+    let income = 0;
+    let expenses = 0;
+
+    for (const tx of transactions) {
+      tx.amount = parseFloat(tx.amount.toString());
+      if (tx.type === "ingreso") {
+        income += tx.amount;
+      } else if (tx.type === "egreso") {
+        expenses += tx.amount;
+      }
+    }
+
+    return {
+      month: String(month).padStart(2, '0'),
+      year,
+      income: Math.round(income),
+      expenses: Math.round(expenses),
+      balance: Math.round(income - expenses)
+    };
   }
 }
