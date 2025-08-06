@@ -6,6 +6,7 @@ import { Colors, Spacing } from '@/config/theme';
 import TransactionForm from '@/components/transactions/TransactionForm';
 import type { Transaction } from '@/types/Transaction';
 import { useTransactions } from '@/contexts/TransactionsContext';
+import ScreenLayout from '@/components/ui/ScreenLayout';
 
 export default function NewTransactionScreen() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function NewTransactionScreen() {
   const handleSave = async (transaction: Omit<Transaction, 'id' | 'userID' | 'createdAt'>) => {
     try {
       await createTransaction(transaction);
-      router.back();
+      router.push('/(tabs)/transactions'); // Redirect to transactions list
     } catch (error) {
       // Manejar el error
       console.error('Error al guardar la transacción:', error);
@@ -27,31 +28,17 @@ export default function NewTransactionScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: 'Nueva transacción',
-          headerLeft: () => (
-            <TouchableOpacity onPress={handleCancel} style={styles.headerButton}>
-              <FontAwesome5 name="times" size={20} color={Colors.text} />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity 
-              onPress={() => formRef.current?.handleSubmit()} 
-              style={styles.headerButton}
-            >
-              <FontAwesome5 name="check" size={20} color={Colors.primary} />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+    <ScreenLayout
+        title='Nueva Transacción'
+    >
+        <View style={styles.container}>
       <TransactionForm 
         ref={formRef}
         onSave={handleSave} 
         onCancel={handleCancel} 
       />
     </View>
+    </ScreenLayout>
   );
 }
 

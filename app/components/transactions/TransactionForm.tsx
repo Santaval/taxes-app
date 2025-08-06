@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  TextInput, 
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
   TouchableOpacity,
   ScrollView,
   Switch,
@@ -43,7 +43,9 @@ const transactionSchema = z.object({
 type TransactionFormData = z.infer<typeof transactionSchema>;
 
 interface TransactionFormProps {
-  onSave: (transaction: Omit<Transaction, 'id' | 'userID' | 'createdAt'>) => void;
+  onSave: (
+    transaction: Omit<Transaction, 'id' | 'userID' | 'createdAt'>
+  ) => void;
   onCancel: () => void;
 }
 
@@ -66,7 +68,7 @@ const TransactionForm: React.ForwardRefRenderFunction<
       description: '',
       category: '',
       amount: '',
-      hasVat: false,
+      hasVat: true,
       vatRate: '13',
       date: new Date(),
     },
@@ -82,61 +84,66 @@ const TransactionForm: React.ForwardRefRenderFunction<
       date: moment(data.date).format('YYYY-MM-DD'),
     });
   };
-;
-
-  // Expose handleSubmit to parent
-  React.useImperativeHandle(ref, () => ({
-    handleSubmit: handleSubmit(onSubmit)
-  }));
-
   return (
-    <ScrollView 
+    <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      keyboardShouldPersistTaps="handled"
+      keyboardShouldPersistTaps='handled'
     >
       {/* Selector de tipo */}
       <Controller
         control={control}
-        name="type"
+        name='type'
         render={({ field: { value, onChange } }) => (
           <View style={styles.typeSelector}>
             <TouchableOpacity
               style={[
                 styles.typeButton,
                 value === 'ingreso' && styles.typeButtonActive,
-                value === 'ingreso' && { backgroundColor: Colors.success + '15' }
+                value === 'ingreso' && {
+                  backgroundColor: Colors.success + '15',
+                },
               ]}
               onPress={() => onChange('ingreso')}
             >
-              <FontAwesome5 
-                name="arrow-down" 
-                size={16} 
-                color={value === 'ingreso' ? Colors.success : Colors.secondaryText}
+              <FontAwesome5
+                name='arrow-down'
+                size={16}
+                color={
+                  value === 'ingreso' ? Colors.success : Colors.secondaryText
+                }
               />
-              <Text style={[
-                styles.typeText,
-                value === 'ingreso' && { color: Colors.success }
-              ]}>Ingreso</Text>
+              <Text
+                style={[
+                  styles.typeText,
+                  value === 'ingreso' && { color: Colors.success },
+                ]}
+              >
+                Ingreso
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[
                 styles.typeButton,
                 value === 'egreso' && styles.typeButtonActive,
-                value === 'egreso' && { backgroundColor: Colors.error + '15' }
+                value === 'egreso' && { backgroundColor: Colors.error + '15' },
               ]}
               onPress={() => onChange('egreso')}
             >
-              <FontAwesome5 
-                name="arrow-up" 
-                size={16} 
+              <FontAwesome5
+                name='arrow-up'
+                size={16}
                 color={value === 'egreso' ? Colors.error : Colors.secondaryText}
               />
-              <Text style={[
-                styles.typeText,
-                value === 'egreso' && { color: Colors.error }
-              ]}>Egreso</Text>
+              <Text
+                style={[
+                  styles.typeText,
+                  value === 'egreso' && { color: Colors.error },
+                ]}
+              >
+                Egreso
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -147,17 +154,14 @@ const TransactionForm: React.ForwardRefRenderFunction<
         <Text style={styles.label}>Monto</Text>
         <Controller
           control={control}
-          name="amount"
+          name='amount'
           render={({ field: { value, onChange } }) => (
             <TextInput
-              style={[
-                styles.amountInput,
-                errors.amount && styles.inputError
-              ]}
+              style={[styles.amountInput, errors.amount && styles.inputError]}
               value={value}
               onChangeText={(text) => onChange(text.replace(/[^0-9.]/g, ''))}
-              keyboardType="numeric"
-              placeholder="₡0"
+              keyboardType='numeric'
+              placeholder='₡0'
               placeholderTextColor={Colors.secondaryText}
             />
           )}
@@ -172,16 +176,13 @@ const TransactionForm: React.ForwardRefRenderFunction<
         <Text style={styles.label}>Descripción</Text>
         <Controller
           control={control}
-          name="description"
+          name='description'
           render={({ field: { value, onChange } }) => (
             <TextInput
-              style={[
-                styles.input,
-                errors.description && styles.inputError
-              ]}
+              style={[styles.input, errors.description && styles.inputError]}
               value={value}
               onChangeText={onChange}
-              placeholder="Escribe una descripción breve"
+              placeholder='Escribe una descripción breve'
               placeholderTextColor={Colors.secondaryText}
             />
           )}
@@ -196,25 +197,27 @@ const TransactionForm: React.ForwardRefRenderFunction<
         <Text style={styles.label}>Categoría</Text>
         <Controller
           control={control}
-          name="category"
+          name='category'
           render={({ field: { value, onChange } }) => (
             <>
               <TouchableOpacity
                 style={[
                   styles.categorySelector,
-                  errors.category && styles.inputError
+                  errors.category && styles.inputError,
                 ]}
                 onPress={() => setShowCategories(!showCategories)}
               >
-                <Text style={[
-                  styles.categoryText,
-                  !value && styles.placeholderText
-                ]}>
+                <Text
+                  style={[
+                    styles.categoryText,
+                    !value && styles.placeholderText,
+                  ]}
+                >
                   {value || 'Selecciona una categoría'}
                 </Text>
-                <FontAwesome5 
-                  name={showCategories ? 'chevron-up' : 'chevron-down'} 
-                  size={16} 
+                <FontAwesome5
+                  name={showCategories ? 'chevron-up' : 'chevron-down'}
+                  size={16}
                   color={Colors.secondaryText}
                 />
               </TouchableOpacity>
@@ -229,10 +232,14 @@ const TransactionForm: React.ForwardRefRenderFunction<
                         setShowCategories(false);
                       }}
                     >
-                      <Text style={[
-                        styles.categoryItemText,
-                        value === cat && styles.categoryItemTextSelected
-                      ]}>{cat}</Text>
+                      <Text
+                        style={[
+                          styles.categoryItemText,
+                          value === cat && styles.categoryItemTextSelected,
+                        ]}
+                      >
+                        {cat}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -250,12 +257,15 @@ const TransactionForm: React.ForwardRefRenderFunction<
         <Text style={styles.label}>¿Incluye IVA?</Text>
         <Controller
           control={control}
-          name="hasVat"
+          name='hasVat'
           render={({ field: { value, onChange } }) => (
             <Switch
               value={value}
               onValueChange={onChange}
-              trackColor={{ false: Colors.lightGray, true: Colors.primary + '50' }}
+              trackColor={{
+                false: Colors.lightGray,
+                true: Colors.primary + '50',
+              }}
               thumbColor={value ? Colors.primary : Colors.secondaryText}
             />
           )}
@@ -268,17 +278,14 @@ const TransactionForm: React.ForwardRefRenderFunction<
           <Text style={styles.label}>Tasa de IVA (%)</Text>
           <Controller
             control={control}
-            name="vatRate"
+            name='vatRate'
             render={({ field: { value, onChange } }) => (
               <TextInput
-                style={[
-                  styles.input,
-                  errors.vatRate && styles.inputError
-                ]}
+                style={[styles.input, errors.vatRate && styles.inputError]}
                 value={value}
                 onChangeText={onChange}
-                keyboardType="numeric"
-                placeholder="13"
+                keyboardType='numeric'
+                placeholder='13'
                 placeholderTextColor={Colors.secondaryText}
               />
             )}
@@ -294,7 +301,7 @@ const TransactionForm: React.ForwardRefRenderFunction<
         <Text style={styles.label}>Fecha</Text>
         <Controller
           control={control}
-          name="date"
+          name='date'
           render={({ field: { value, onChange } }) => (
             <>
               <TouchableOpacity
@@ -304,16 +311,16 @@ const TransactionForm: React.ForwardRefRenderFunction<
                 <Text style={styles.dateText}>
                   {moment(value).format('D [de] MMMM, YYYY')}
                 </Text>
-                <FontAwesome5 
-                  name="calendar-alt" 
-                  size={16} 
+                <FontAwesome5
+                  name='calendar-alt'
+                  size={16}
                   color={Colors.secondaryText}
                 />
               </TouchableOpacity>
               {showDatePicker && (
                 <DateTimePicker
                   value={value}
-                  mode="date"
+                  mode='date'
                   display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                   onChange={(event, selectedDate) => {
                     setShowDatePicker(false);
@@ -327,9 +334,16 @@ const TransactionForm: React.ForwardRefRenderFunction<
           )}
         />
       </View>
+
+        <TouchableOpacity onPress={handleSubmit(onSubmit)}
+        style={styles.continueButton}
+        disabled={!watch('description') || !watch('amount') || !watch('category')}
+      >
+        <Text style={styles.continueButtonText}>Guardar</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -338,6 +352,18 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: Spacing.lg,
   },
+  continueButton: {
+    backgroundColor: Colors.primary,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+    continueButtonText: {
+        color: Colors.white,
+        fontSize: Typography.size.md,
+        fontWeight: '600',
+    },
   typeSelector: {
     flexDirection: 'row',
     marginBottom: Spacing.lg,

@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native
 import { FontAwesome5 } from '@expo/vector-icons';
 import moment from 'moment';
 import { Colors, Spacing, Typography, BorderRadius } from '@/config/theme';
+import { router } from 'expo-router';
 
 interface Transaction {
   id: string;
@@ -91,6 +92,7 @@ export default function TransactionList({transactions} : ListProps) {
   const renderItem = ({ item }: { item: Transaction }) => (
     <TransactionItem 
       transaction={item} 
+      onPress={() => router.push(`/transactions/${item.id}`)}
     />
   );
 
