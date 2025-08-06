@@ -47,12 +47,13 @@ interface TransactionFormProps {
     transaction: Omit<Transaction, 'id' | 'userID' | 'createdAt'>
   ) => void;
   onCancel: () => void;
+  initialValues?: Transaction;
 }
 
 const TransactionForm: React.ForwardRefRenderFunction<
   { handleSubmit: () => void },
   TransactionFormProps
-> = ({ onSave, onCancel }, ref) => {
+> = ({ onSave, onCancel, initialValues }, ref) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
 
@@ -63,15 +64,25 @@ const TransactionForm: React.ForwardRefRenderFunction<
     formState: { errors },
   } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      type: 'ingreso',
-      description: '',
-      category: '',
-      amount: '',
-      hasVat: true,
-      vatRate: '13',
-      date: new Date(),
-    },
+    defaultValues: initialValues 
+      ? {
+          type: initialValues.type,
+          description: initialValues.description,
+          category: initialValues.category,
+          amount: initialValues.amount.toString(),
+          hasVat: initialValues.hasVat,
+          vatRate: initialValues.vatRate.toString(),
+          date: new Date(initialValues.date),
+        }
+      : {
+          type: 'ingreso',
+          description: '',
+          category: '',
+          amount: '',
+          hasVat: true,
+          vatRate: '13',
+          date: new Date(),
+        },
   });
 
   const hasVat = watch('hasVat');

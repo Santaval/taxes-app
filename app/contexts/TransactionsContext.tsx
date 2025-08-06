@@ -10,6 +10,7 @@ interface TransactionsContextData {
   loading: boolean;
   error: string | null;
   createTransaction: (data: NewTransaction) => Promise<void>;
+  updateTransaction: (id: string, data: Partial<NewTransaction>) => Promise<void>;
   refreshTransactions: () => Promise<void>;
   expenses: Transaction[];
   incomes: Transaction[];
@@ -51,6 +52,19 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const updateTransaction = async (id: string, data: Partial<NewTransaction>) => {
+    try {
+      const updatedTransaction = await TransactionsService.update(id, data);
+      setTransactions(transactions.map(t => 
+        t.id === id ? updatedTransaction : t
+      ));
+      router.back();
+    } catch (error) {
+      showToast.error(error instanceof Error ? error.message : "Error al actualizar la transacción");
+      setError(error as string);
+    }
+  };
+
   useEffect(() => {
     if (user) { 
       fetchTransactions();
@@ -64,6 +78,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
         loading, 
         error, 
         createTransaction,
+        updateTransaction,
         refreshTransactions: fetchTransactions,
         expenses,
         incomes

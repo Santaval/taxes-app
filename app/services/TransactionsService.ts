@@ -56,4 +56,22 @@ export default class TransactionsService {
       throw new Error(axiosError.response?.data?.message || axiosError.message);
     }
   }
+
+  /**
+   * Updates an existing transaction.
+   * 
+   * @param {string} id - The ID of the transaction to update.
+   * @param {Partial<NewTransaction>} data - The transaction data to update.
+   * @returns {Promise<Transaction>} A promise that resolves to the updated transaction.
+   * @throws {Error} If the request fails.
+   */
+  static async update(id: string, data: Partial<NewTransaction>) : Promise<Transaction> {
+    try {
+      const { data: response } = await api.put(`/transactions/${id}`, data);
+      return response;
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiErrorResponse>;
+      throw new Error(axiosError.response?.data?.message || axiosError.message);
+    }
+  }
 }

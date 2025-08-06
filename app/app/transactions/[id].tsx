@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import ScreenLayout from "@/components/ui/ScreenLayout";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
 export default function TransactionDetailScreen() {
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const { id } = useLocalSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -208,7 +209,10 @@ export default function TransactionDetailScreen() {
           <TouchableOpacity 
             style={[styles.actionButton, { backgroundColor: Colors.primary + '15' }]}
             onPress={() => {
-              // Implement edit functionality
+              router.push({
+                pathname: '/transactions/edit',
+                params: { id }
+              });
             }}
           >
             <IconSymbol name="pencil" size={20} color={Colors.primary} />
