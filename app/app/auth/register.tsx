@@ -13,14 +13,19 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, Spacing, BorderRadius, Typography, Shadows } from '../../config/theme';
 import { Link } from 'expo-router';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { register } = useAuth();
 
-  const handleLogin = () => {
-    // TODO: Implementar lógica de inicio de sesión
-    console.log('Login:', { email, password });
+  const handleLogin = async () => {
+    try {
+      await register(email, password);
+    } catch (error) {
+      console.error('Error al crear cuenta:', error);
+    }
   };
 
   return (
@@ -82,18 +87,12 @@ export default function LoginScreen() {
               />
             </View>
 
-            <TouchableOpacity 
-              style={styles.forgotPassword}
-              onPress={() => console.log('Olvidé mi contraseña')}
-            >
-              <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableOpacity>
-
+    
             <TouchableOpacity 
               style={styles.loginButton}
               onPress={handleLogin}
             >
-              <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+              <Text style={styles.loginButtonText}>Crear cuenta</Text>
             </TouchableOpacity>
 
             <View style={styles.divider}>
@@ -102,9 +101,9 @@ export default function LoginScreen() {
               <View style={styles.dividerLine} />
             </View>
 
-            <Link href="/auth/register" asChild>
+            <Link href="/auth/login" asChild>
               <TouchableOpacity style={styles.registerButton}>
-                <Text style={styles.registerButtonText}>Crear una cuenta</Text>
+                <Text style={styles.registerButtonText}>Iniciar sesión</Text>
               </TouchableOpacity>
             </Link>
           </View>
