@@ -9,10 +9,6 @@ export default function FinancialSummary() {
   const { reportData } = useReport("balance")
 
 
-  if (!reportData) {
-    return null; // or a loading state
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,13 +19,13 @@ export default function FinancialSummary() {
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Ingresos</Text>
           <Text style={[styles.statValue, styles.incomeText]}>
-            {formatCurrency(reportData.income)}
+            {formatCurrency(reportData?.income || 0)}
           </Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Gastos</Text>
           <Text style={[styles.statValue, styles.expensesText]}>
-            {formatCurrency(reportData.expenses)}
+            {formatCurrency(reportData?.expenses || 0)}
           </Text>
         </View>
         <View style={styles.statItem}>
@@ -37,10 +33,10 @@ export default function FinancialSummary() {
           <Text
             style={[
               styles.statValue,
-              reportData.balance >= 0 ? styles.incomeText : styles.expensesText,
+              reportData?.balance || 0 >= 0 ? styles.incomeText : styles.expensesText,
             ]}
           >
-            {formatCurrency(reportData.balance)}
+            {formatCurrency(reportData?.balance || 0)}
           </Text>
         </View>
       </View>

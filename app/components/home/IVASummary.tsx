@@ -8,11 +8,6 @@ import useReport from '@/hooks/useReport';
 export default function IvaSummary() {
   const { reportData } = useReport("iva")
 
-
-  if (!reportData) {
-    return null; // or a loading state
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,13 +18,13 @@ export default function IvaSummary() {
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>IVA Cobrado</Text>
           <Text style={[styles.statValue, styles.incomeText]}>
-            {formatCurrency(reportData.vatCharged)}
+            {formatCurrency(reportData?.vatCharged || 0)}
           </Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>IVA Deducible</Text>
           <Text style={[styles.statValue, styles.expensesText]}>
-            {formatCurrency(reportData.vatDeductible)}
+            {formatCurrency(reportData?.vatDeductible || 0)}
           </Text>
         </View>
         <View style={styles.statItem}>
@@ -37,10 +32,10 @@ export default function IvaSummary() {
           <Text
             style={[
               styles.statValue,
-              reportData.vatNet >= 0 ? styles.incomeText : styles.expensesText,
+              reportData?.vatNet || 0 >= 0 ? styles.incomeText : styles.expensesText,
             ]}
           >
-            {formatCurrency(reportData.vatNet)}
+            {formatCurrency(reportData?.vatNet || 0)}
           </Text>
         </View>
       </View>
