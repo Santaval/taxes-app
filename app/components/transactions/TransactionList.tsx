@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native
 import { FontAwesome5 } from '@expo/vector-icons';
 import moment from 'moment';
 import { Colors, Spacing, Typography, BorderRadius } from '@/config/theme';
-import { useTransactions } from '@/contexts/TransactionsContext';
 
 interface Transaction {
   id: string;
@@ -14,6 +13,10 @@ interface Transaction {
   hasVat: boolean;
   vatRate: number;
   date: string;
+}
+
+type ListProps = {
+  transactions: Transaction[];
 }
 
 
@@ -84,8 +87,7 @@ const TransactionItem = React.memo(({ transaction, onPress }: {
 });
 TransactionItem.displayName = "TransactionItem";
 
-export default function TransactionList() {
-  const { transactions } = useTransactions()
+export default function TransactionList({transactions} : ListProps) {
   const renderItem = ({ item }: { item: Transaction }) => (
     <TransactionItem 
       transaction={item} 

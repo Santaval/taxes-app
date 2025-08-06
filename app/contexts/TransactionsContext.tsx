@@ -11,6 +11,8 @@ interface TransactionsContextData {
   error: string | null;
   createTransaction: (data: NewTransaction) => Promise<void>;
   refreshTransactions: () => Promise<void>;
+  expenses: Transaction[];
+  incomes: Transaction[];
 }
 
 const TransactionsContext = createContext<TransactionsContextData | undefined>(undefined);
@@ -20,6 +22,9 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const expenses = transactions.filter(t => t.type === 'egreso');
+  const incomes = transactions.filter(t => t.type === 'ingreso');
 
   const fetchTransactions = async () => {
     setLoading(true);
@@ -59,7 +64,9 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
         loading, 
         error, 
         createTransaction,
-        refreshTransactions: fetchTransactions
+        refreshTransactions: fetchTransactions,
+        expenses,
+        incomes
       }}
     >
       {children}

@@ -4,9 +4,12 @@ import TransactionsHeader from '@/components/transactions/TransactionsHeader'
 import TransactionList from '@/components/transactions/TransactionList'
 import { Colors } from '@/config/theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTransactions } from '@/contexts/TransactionsContext'
+import LineChart from '@/components/charts/BarsChart'
 
 
 export default function Transactions() {
+  const { transactions } = useTransactions();
   const handleFilterPress = () => {
     // Implementar lógica de filtrado
   };
@@ -23,6 +26,7 @@ export default function Transactions() {
         onSearchPress={handleSearchPress}
       />
       <TransactionList 
+        transactions={transactions}
       />
     </SafeAreaView>
   );
