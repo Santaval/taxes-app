@@ -142,7 +142,7 @@ export default class AuthService {
 
   static async completeProfile(userData: UserUpdate): Promise<void> {
     try {
-      await api.put(`auth/profile`, userData);
+      await api.post(`auth/complete`, userData);
       return;
     } catch (error) {
       const axiosError = error as AxiosError<ApiErrorResponse>;

@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Colors, Spacing, BorderRadius, Typography, Shadows, IconSizes } from '../config/theme'
+import { router } from 'expo-router'
 
 export default function LoadingScreen() {
   const scale = useSharedValue(1)
@@ -36,6 +37,13 @@ export default function LoadingScreen() {
       -1,
       false
     )
+
+    // Redirigir a la pantalla de login después de 2 segundos
+    const timer = setTimeout(() => {
+      router.replace('/auth/login')
+    }, 500)
+
+    return () => clearTimeout(timer)
   }, [scale, rotation])
 
   const iconStyle = useAnimatedStyle(() => {
