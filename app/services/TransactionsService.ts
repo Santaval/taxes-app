@@ -15,7 +15,7 @@ export default class TransactionsService {
    */
   static async all() {
     try {
-      const { data } = await api.get<{transactions: Transaction[], balance: number}>("/transactions");
+      const { data } = await api.get<Transaction[]>("/transactions");
       return data;
     } catch (error) {
       const axiosError = error as AxiosError<ApiErrorResponse>;

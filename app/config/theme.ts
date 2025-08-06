@@ -15,7 +15,10 @@ export const Colors = {
   // Component Colors
   componentBg: 'rgba(255, 255, 255, 0.9)',
   text: '#0066cc',
+  secondaryText: '#555555',
   shadow: '#000000',
+
+  lightGray: '#f0f0f0',
 }
 
 export const Spacing = {

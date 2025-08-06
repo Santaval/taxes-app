@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native
 import { FontAwesome5 } from '@expo/vector-icons';
 import moment from 'moment';
 import { Colors, Spacing, Typography, BorderRadius } from '@/config/theme';
+import { useTransactions } from '@/contexts/TransactionsContext';
 
 interface Transaction {
   id: string;
@@ -15,10 +16,6 @@ interface Transaction {
   date: string;
 }
 
-interface TransactionListProps {
-  transactions: Transaction[];
-  onTransactionPress?: (transaction: Transaction) => void;
-}
 
 const TransactionItem = React.memo(({ transaction, onPress }: { 
   transaction: Transaction; 
@@ -87,11 +84,11 @@ const TransactionItem = React.memo(({ transaction, onPress }: {
 });
 TransactionItem.displayName = "TransactionItem";
 
-export default function TransactionList({ transactions, onTransactionPress }: TransactionListProps) {
+export default function TransactionList() {
+  const { transactions } = useTransactions()
   const renderItem = ({ item }: { item: Transaction }) => (
     <TransactionItem 
       transaction={item} 
-      onPress={() => onTransactionPress?.(item)}
     />
   );
 

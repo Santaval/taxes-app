@@ -9,7 +9,6 @@ interface TransactionsContextData {
   transactions: Transaction[];
   loading: boolean;
   error: string | null;
-  balance: number;
   requestWithdrawal: (amount: number) => Promise<void>;
   refreshTransactions: () => Promise<void>;
 }
@@ -21,14 +20,12 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [balance, setBalance] = useState<number>(0);
 
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const { transactions, balance } = await TransactionsService.all();
+      const transactions = await TransactionsService.all();
       setTransactions(transactions);
-      setBalance(balance);
       setError(null);
     } catch (error) {
       showToast.error(error instanceof Error ? error.message : "Error al obtener transacciones");
@@ -42,7 +39,6 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     try {
       const transaction = await TransactionsService.withdraw(amount);
       setTransactions([transaction, ...transactions]);
-      setBalance(balance - amount);
       router.back();
     } catch (error) {
       showToast.error(error instanceof Error ? error.message : "Error al retirar dinero");
@@ -62,7 +58,6 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
         transactions, 
         loading, 
         error, 
-        balance, 
         requestWithdrawal,
         refreshTransactions: fetchTransactions
       }}
