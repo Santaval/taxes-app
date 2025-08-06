@@ -10,6 +10,10 @@ export default class TransactionModel {
     return TransactionRepository.all(month, year, type);
   }
 
+  static async allByUser(userID: string): Promise<Transaction[]> {
+    return TransactionRepository.findAll("userID", userID);
+  }
+
   /**
    * Finds a transaction by field and value
    */

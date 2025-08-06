@@ -6,7 +6,7 @@ import { NewTransactionSchema, UpdateTransactionSchema } from "../../schemas/tra
 const transactionsRouter = Router();
 
 // Get all transactions with optional filters
-transactionsRouter.get("/", TransactionController.all);
+transactionsRouter.get("/", TransactionController.allByUser);
 
 // Get a specific transaction
 transactionsRouter.get("/:id", TransactionController.find);

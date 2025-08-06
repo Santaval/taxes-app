@@ -26,6 +26,20 @@ export default class TransactionController {
   }
 
   /**
+   * Retrieves all transactions for a specific user
+   * @route GET /transactions/user/:userID
+   */
+  static async allByUser(req: Request, res: Response) {
+    try {
+      const { id } = req.user as User;
+      const transactions = await TransactionModel.allByUser(id);
+      res.json(transactions);
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+    }
+  }
+
+  /**
    * Finds a transaction by ID
    * @route GET /transactions/:id
    */
