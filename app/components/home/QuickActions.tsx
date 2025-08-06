@@ -50,7 +50,6 @@ export default function QuickActions() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Acciones Rápidas</Text>
       <View style={styles.grid}>
         {QUICK_ACTIONS.map((action) => (
           <TouchableOpacity
@@ -76,18 +75,8 @@ export default function QuickActions() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: Spacing.lg,
-    backgroundColor: 'white',
-    borderRadius: BorderRadius.lg,
-    marginHorizontal: Spacing.md,
+    padding: Spacing.sm,
     marginTop: Spacing.lg,
-    ...Shadows.default,
-  },
-  sectionTitle: {
-    fontSize: Typography.size.md,
-    fontWeight: '600',
-    color: Colors.text,
-    marginBottom: Spacing.lg,
   },
   grid: {
     flexDirection: 'row',
@@ -96,7 +85,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   actionButton: {
-    width: '38%', // Permite dos botones por fila con espacio entre ellos
+    width: '30%', // Permite dos botones por fila con espacio entre ellos
     backgroundColor: Colors.componentBg,
     borderRadius: BorderRadius.md,
     padding: Spacing.md,
@@ -104,15 +93,15 @@ const styles = StyleSheet.create({
     ...Shadows.default,
   },
   iconContainer: {
-    width: 56,
-    height: 56,
+    width: 26,
+    height: 26,
     borderRadius: 28,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: Spacing.sm,
   },
   actionLabel: {
-    fontSize: Typography.size.xs,
+    fontSize: 10,
     color: Colors.text,
     fontWeight: '500',
     textAlign: 'center',
