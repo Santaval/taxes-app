@@ -1,4 +1,4 @@
-import { Transaction } from "@/types/Transaction";
+import { Transaction, TransactionRequestConfig } from "@/types/Transaction";
 import TransactionModel from "./transaction.model";
 
 export default class ReportsModel {
@@ -10,8 +10,8 @@ export default class ReportsModel {
    * @param year - The year for which to generate the report (e.g., 2023).
    * @returns A promise that resolves to the IVA report data.
    */
-  static async iva(userId: string, month: number, year: number): Promise<any> {
-    const transactions = await TransactionModel.findAll("userID", userId);
+  static async iva(userId: string, config: TransactionRequestConfig): Promise<any> {
+    const transactions = await TransactionModel.allByUser(userId, config);
     let vatCharged = 0;
     let vatDeductible = 0;
 
@@ -32,19 +32,19 @@ export default class ReportsModel {
     }
 
     return {
-    month: String(month).padStart(2, '0'),
-    year,
-    vatCharged: Math.round(vatCharged),
-    vatDeductible: Math.round(vatDeductible),
-    vatNet: Math.round(vatCharged - vatDeductible)
-  };
+      from: config.from.format("DD/MM/YYYY"),
+      to: config.to.format("DD/MM/YYYY"),
+      vatCharged: Math.round(vatCharged),
+      vatDeductible: Math.round(vatDeductible),
+      vatNet: Math.round(vatCharged - vatDeductible)
+    };
   }
 
   /**
    * Generates an income and expenses report for a given user, month, and year.
    */
-  static async incomeAndExpenses(userId: string, month: number, year: number): Promise<any> {
-    const transactions = await TransactionModel.findAll("userID", userId);
+  static async incomeAndExpenses(userId: string, config: TransactionRequestConfig): Promise<any> {
+    const transactions = await TransactionModel.allByUser(userId, config);
     let income = 0;
     let expenses = 0;
 
@@ -58,8 +58,8 @@ export default class ReportsModel {
     }
 
     return {
-      month: String(month).padStart(2, '0'),
-      year,
+      month: String(config.from.month()).padStart(2, '0'),
+      year: config.from.year(),
       income: Math.round(income),
       expenses: Math.round(expenses),
       balance: Math.round(income - expenses)

@@ -1,6 +1,7 @@
 import ReportsModel from "../../models/reports.model";
 import { User } from "@/types/User";
 import { Request, Response } from "express";
+import moment from "moment";
 
 export default class ReportsController {
   /**
@@ -8,18 +9,17 @@ export default class ReportsController {
    */
   static async iva(req: Request, res: Response) {
     try {
-      const { month, year } = req.query;
+      const { from, to } = req.query;
       const { id } = req.user as User;
 
-      if (!month || !year) {
-        res.status(400).json({ error: "Month and year are required" });
-        return;
+      const config = {
+        from: moment(String(from)).isValid() ? moment(String(from)) : moment().startOf('month'),
+        to: moment(String(to)).isValid() ? moment(String(to)) : moment().endOf('month')
       }
 
       const report = await ReportsModel.iva(
         id,
-        parseInt(month as string),
-        parseInt(year as string),
+        config
       );
       res.json(report);
     } catch (error) {
@@ -32,18 +32,19 @@ export default class ReportsController {
    */
   static async incomeAndExpenses(req: Request, res: Response) {
     try {
-      const { month, year } = req.query;
+      const { from, to } = req.query;
       const { id } = req.user as User;
 
-      if (!month || !year) {
-        res.status(400).json({ error: "Month and year are required" });
-        return;
+      const config = {
+        from: moment(String(from)).isValid() ? moment(String(from)) : moment().startOf('month'),
+        to: moment(String(to)).isValid() ? moment(String(to)) : moment().endOf('month')
       }
+
+
 
       const report = await ReportsModel.incomeAndExpenses(
         id,
-        parseInt(month as string),
-        parseInt(year as string),
+        config
       );
       res.json(report);
     } catch (error) {

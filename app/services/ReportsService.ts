@@ -7,23 +7,31 @@ interface ApiErrorResponse {
   message: string;
 }
 
-type Config = {
-  month: number;
-  year: number
+type DateRangeConfig = {
+  from: Date;
+  to: Date;
 }
 
 export default class ReportsService {
   /**
-   * Retrieves the balance report from API
+   * Retrieves report data from API for a specific date range
    * 
-   * @returns {Promise<BalanceReport>} A promise that resolves to Balance report data.
+   * @param {string} reportType - The type of report to retrieve
+   * @param {DateRangeConfig} config - Date range configuration
+   * @returns {Promise<T[keyof T]>} A promise that resolves to the report data
    * @throws {Error} If the request fails.
    */
-  static async get<T extends ReportsDataMap>(reportType: string, config?: Config): Promise<T[keyof T]> {
+  static async get<T extends ReportsDataMap>(reportType: string, config?: DateRangeConfig): Promise<T[keyof T]> {
     try {
       const urlQuery = new URLSearchParams();
-      urlQuery.append("month", config?.month.toString() || moment().get("month").toString());
-      urlQuery.append("year", config?.year.toString() || moment().get("year").toString());
+      if (config) {
+        urlQuery.append("from", moment(config.from).format("YYYY-MM-DD"));
+        urlQuery.append("to", moment(config.to).format("YYYY-MM-DD"));
+      } else {
+        // Default to current month if no range specified
+        urlQuery.append("from", moment().startOf('month').format("YYYY-MM-DD"));
+        urlQuery.append("to", moment().endOf('month').format("YYYY-MM-DD"));
+      }
       const { data } = await api.get<T[keyof T]>(`/reports/${reportType}`, {
         params: urlQuery,
       });
