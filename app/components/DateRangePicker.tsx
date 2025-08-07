@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Colors, Spacing, BorderRadius, Typography } from '@/config/theme';
 import { useDateRange } from '@/contexts/DateRangeContext';
 
@@ -47,17 +47,6 @@ const styles = StyleSheet.create({
   container: {
     padding: Spacing.md,
     borderRadius: BorderRadius.lg,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
-      },
-    }),
   },
   presetsContainer: {
     flexDirection: 'row',
@@ -75,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   presetText: {
-    fontSize: Typography.size.sm,
+    fontSize: Typography.size.xs,
     color: Colors.white,
   },
   presetTextActive: {

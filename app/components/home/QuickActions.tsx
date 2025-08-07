@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   actionButton: {
-    width: '30%', // Permite dos botones por fila con espacio entre ellos
+    width: '28%', // Permite dos botones por fila con espacio entre ellos
     backgroundColor: Colors.componentBg,
     borderRadius: BorderRadius.md,
     padding: Spacing.md,

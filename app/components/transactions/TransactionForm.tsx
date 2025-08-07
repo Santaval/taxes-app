@@ -362,6 +362,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: Spacing.lg,
+    paddingBottom: 150
   },
   continueButton: {
     backgroundColor: Colors.primary,
@@ -395,9 +396,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
       },
     }),
   },
@@ -434,9 +432,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
       },
-      android: {
-        elevation: 3,
-      },
     }),
   },
   inputError: {
@@ -463,10 +458,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
-      },
+      }
     }),
   },
   categorySelector: {
@@ -484,9 +476,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
       },
     }),
   },
@@ -507,9 +496,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
       },
     }),
   },
@@ -545,9 +531,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-      },
-      android: {
-        elevation: 3,
       },
     }),
   },
