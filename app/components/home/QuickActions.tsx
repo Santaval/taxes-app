@@ -20,18 +20,18 @@ const QUICK_ACTIONS: QuickAction[] = [
     route: '/transactions/new',
     color: '#4CAF50', // Verde suave
   },
-  {
-    id: 'invoices',
-    label: 'Mis Facturas',
-    icon: 'file-alt',
-    route: '/invoices',
-    color: '#2196F3', // Azul suave
-  },
+  // {
+  //   id: 'invoices',
+  //   label: 'Mis Facturas',
+  //   icon: 'file-alt',
+  //   route: '/invoices',
+  //   color: '#2196F3', // Azul suave
+  // },
   {
     id: 'expenses',
     label: 'Gastos',
     icon: 'money-bill-wave',
-    route: '/expenses',
+    route: '/transactions/expenses',
     color: '#FF9800', // Naranja suave
   },
   {
