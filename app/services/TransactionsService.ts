@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./api";
-import { NewTransaction, Transaction } from "@/types/Transaction";
+import { NewTransaction, Transaction, TransactionRequestConfig } from "@/types/Transaction";
 
 interface ApiErrorResponse {
   message: string;
@@ -13,9 +13,9 @@ export default class TransactionsService {
    * @returns {Promise<Transaction[]>} A promise that resolves to an array of transactions.
    * @throws {Error} If the request fails.
    */
-  static async all() {
+  static async all(config?: TransactionRequestConfig): Promise<Transaction[]> {
     try {
-      const { data } = await api.get<Transaction[]>("/transactions");
+      const { data } = await api.get<Transaction[]>("/transactions", { params: config });
       return data;
     } catch (error) {
       const axiosError = error as AxiosError<ApiErrorResponse>;

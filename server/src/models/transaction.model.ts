@@ -1,6 +1,7 @@
 import TransactionRepository from "../repository/transactions.repository";
-import { Transaction } from "../types/Transaction";
+import { Transaction, TransactionRequestConfig } from "../types/Transaction";
 import { v4 as uuidv4 } from "uuid";
+
 
 export default class TransactionModel {
   /**
@@ -10,8 +11,8 @@ export default class TransactionModel {
     return TransactionRepository.all(month, year, type);
   }
 
-  static async allByUser(userID: string): Promise<Transaction[]> {
-    return TransactionRepository.findAll("userID", userID);
+  static async allByUser(userID: string, config: TransactionRequestConfig): Promise<Transaction[]> {
+    return TransactionRepository.allByUser(userID, config);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Transaction } from "../types/Transaction";
+import { Transaction, TransactionRequestConfig } from "../types/Transaction";
 import BaseRepository from "./base.repository";
 
 export default class TransactionRepository extends BaseRepository {
@@ -30,6 +30,19 @@ export default class TransactionRepository extends BaseRepository {
       query += " WHERE " + conditions.join(" AND ");
     }
 
+    return this.query(query, values);
+  }
+
+
+  /**
+   * Retrieves all transactions for a specific user within a date range
+   * @param {string} userID - The ID of the user
+   * @param {TransactionRequestConfig} config - The date range configuration
+   * @returns {Promise<Transaction[]>}
+   */
+  static async allByUser(userID: string, config: TransactionRequestConfig): Promise<Transaction[]> {
+    const query = `SELECT * FROM ${this.TABLE} WHERE userID = ? AND date BETWEEN ? AND ?`;
+    const values = [userID, config.from.toISOString(), config.to.toISOString()];
     return this.query(query, values);
   }
 

@@ -12,3 +12,8 @@ export type Transaction = {
 };
 
 type NewTransaction = Omit<Transaction, 'id' | 'userID' | 'createdAt'>;
+
+export type TransactionRequestConfig = {
+  from: Moment;
+  to: Moment;
+}

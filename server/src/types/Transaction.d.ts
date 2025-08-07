@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export type Transaction = {
   id: string; // UUID
   userID: string; // UUID
@@ -10,3 +12,8 @@ export type Transaction = {
   date: string; // ISO date string (YYYY-MM-DD)
   createdAt: string; // ISO date string
 };
+
+export type TransactionRequestConfig = {
+  from: Moment;
+  to: Moment;
+}

@@ -2,8 +2,9 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { router } from 'expo-router';
 import { showToast } from '@/utils/toast';
 import TransactionsService from '@/services/TransactionsService';
-import { NewTransaction, Transaction } from '@/types/Transaction';
+import { NewTransaction, Transaction, TransactionRequestConfig } from '@/types/Transaction';
 import { useAuth } from './AuthContext';
+import { useDateRange } from './DateRangeContext';
 
 interface TransactionsContextData {
   transactions: Transaction[];
@@ -21,6 +22,7 @@ const TransactionsContext = createContext<TransactionsContextData | undefined>(u
 
 export function TransactionsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const { range } = useDateRange();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -31,7 +33,11 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const transactions = await TransactionsService.all();
+      const config: TransactionRequestConfig = {
+        from: range.from,
+        to: range.to,
+      }
+      const transactions = await TransactionsService.all(config);
       setTransactions(transactions);
       setError(null);
     } catch (error) {
@@ -81,7 +87,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     if (user) { 
       fetchTransactions();
     }
-  }, [user]);
+  }, [user, range]);
 
   return (
     <TransactionsContext.Provider 

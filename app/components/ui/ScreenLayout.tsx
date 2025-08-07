@@ -1,7 +1,8 @@
-import { StyleSheet, SafeAreaView, ViewStyle } from 'react-native';
+import { StyleSheet, SafeAreaView, ViewStyle, View } from 'react-native';
 import { Colors } from '@/config/theme';
 import ContentContainer from './ContentContainer';
 import Header from './Header';
+import DateRangePicker from '../DateRangePicker';
 
 interface ScreenLayoutProps {
   /** Title to display in the header */
@@ -18,6 +19,8 @@ interface ScreenLayoutProps {
   contentStyle?: ViewStyle;
   /** Additional styles for the header */
   headerStyle?: ViewStyle;
+  /** Show DateRangePicker */
+  showDateRangePicker?: boolean;
 }
 
 /**
@@ -33,11 +36,13 @@ export default function ScreenLayout({
   containerStyle,
   contentStyle,
   headerStyle,
+  showDateRangePicker = false,
 }: ScreenLayoutProps) {
   return (
     <SafeAreaView style={[styles.pageContainer, containerStyle]}>
       <Header title={title} containerStyle={headerStyle}>
-        {headerContent}
+          {showDateRangePicker && <DateRangePicker />}
+          {headerContent}
       </Header>
 
       <ContentContainer title={contentTitle} containerStyle={contentStyle}>
@@ -54,4 +59,4 @@ const styles = StyleSheet.create({
     padding: 16,
     color: Colors.white,
   },
-}); 
+});

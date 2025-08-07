@@ -1,9 +1,8 @@
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import React, { useState, useCallback } from 'react';
 import { Colors } from '../../config/theme';
 import QuickActions from '@/components/home/QuickActions';
 import FinancialSummary from '@/components/home/FinancialSummary';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 import ScreenLayout from '@/components/ui/ScreenLayout';
 
@@ -29,7 +28,10 @@ export default function Home() {
 
         <ScreenLayout
         title='Inicio'
-        headerContent={ <FinancialSummary key={`financial-${refreshKey}`} />}
+        headerContent={
+          <FinancialSummary key={`financial-${refreshKey}`} />
+        }
+        showDateRangePicker
         contentTitle=''
       >
       <ScrollView
@@ -41,7 +43,7 @@ export default function Home() {
           />
         }
       >
-        <QuickActions />
+      <QuickActions />
       </ScrollView>
     </ScreenLayout>
   );

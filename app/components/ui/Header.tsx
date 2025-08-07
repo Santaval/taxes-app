@@ -18,7 +18,9 @@ export default function Header({ title, children, containerStyle }: HeaderProps)
   return (
     <View style={[styles.headerContainer, containerStyle]}>
       <Text style={styles.title}>{title}</Text>
-      {children}
+      <View>
+        {children}
+      </View>
     </View>
   );
 }

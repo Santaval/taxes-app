@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import TransactionModel from "../../models/transaction.model";
 import { NewTransactionSchema, UpdateTransactionSchema } from "../../schemas/transaction.schema";
 import { User } from "@/types/User";
+import moment from "moment";
 
 export default class TransactionController {
   /**
@@ -32,7 +33,14 @@ export default class TransactionController {
   static async allByUser(req: Request, res: Response) {
     try {
       const { id } = req.user as User;
-      const transactions = await TransactionModel.allByUser(id);
+      const { from, to } = req.query;
+      
+      const config = {
+        from: moment(String(from)).isValid() ? moment(String(from)) : moment().startOf('month'),
+        to: moment(String(to)).isValid() ? moment(String(to)) : moment().endOf('month')
+      }
+
+      const transactions = await TransactionModel.allByUser(id, config);
       res.json(transactions);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
