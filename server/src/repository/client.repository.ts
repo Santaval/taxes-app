@@ -20,7 +20,7 @@ export default class ClientRepository extends BaseRepository {
    */
   static async find(fieldToSearch: string, value: string): Promise<Client | null> {
     const result = await super.find(this.tableName, fieldToSearch, value);
-    return result.length > 0 ? result[0] : null;
+    return result;
   }
 
   /**
@@ -37,7 +37,7 @@ export default class ClientRepository extends BaseRepository {
    * Creates a new client in the repository.
    * @param client 
    */
-  static async create(client: Client): Promise<void> {
+  static async create(client: Omit<Client, 'createdAt'>): Promise<void> {
     const fields = Object.keys(client);
     const values = Object.values(client);
     await super.insert(fields, values, this.tableName);

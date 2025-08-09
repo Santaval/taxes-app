@@ -29,7 +29,6 @@ export default class ClientModel {
     const client = {
       ...clientData,
       id,
-      createdAt: new Date().toISOString()
     };
     await ClientRepository.create(client);
     return this.find("id", id);
