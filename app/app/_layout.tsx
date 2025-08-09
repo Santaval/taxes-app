@@ -12,6 +12,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { TransactionsProvider } from '@/contexts/TransactionsContext';
 import { DateRangeProvider } from '@/contexts/DateRangeContext';
+import { ClientsProvider } from '@/contexts/ClientsContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -29,8 +30,10 @@ export default function RootLayout() {
       <AuthProvider>
         <DateRangeProvider>
           <TransactionsProvider>
-            <Stack screenOptions={{headerShown: false}}/>
-            <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            <ClientsProvider>
+              <Stack screenOptions={{headerShown: false}}/>
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            </ClientsProvider>
           </TransactionsProvider>
         </DateRangeProvider>
       </AuthProvider>

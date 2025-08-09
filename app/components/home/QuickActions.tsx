@@ -34,11 +34,18 @@ const QUICK_ACTIONS: QuickAction[] = [
     route: '/transactions/expenses',
     color: '#FF9800', // Naranja suave
   },
-  {
-    id: 'taxes',
-    label: 'Impuestos',
-    icon: 'percentage',
-    route: '/taxes',
+  // {
+  //   id: 'taxes',
+  //   label: 'Impuestos',
+  //   icon: 'percentage',
+  //   route: '/taxes',
+  //   color: '#9C27B0', // Púrpura suave
+  // },
+    {
+    id: 'clients',
+    label: 'Clientes',
+    icon: 'users',
+    route: '/clients',
     color: '#9C27B0', // Púrpura suave
   },
 ];
