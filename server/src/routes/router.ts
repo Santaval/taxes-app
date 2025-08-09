@@ -7,6 +7,7 @@ import filesRouter from "./users/file.routes";
 import taxProfileRouter from "./users/taxProfile.routes";
 import transactionsRouter from "./users/transaction.routes";
 import reportsRouter from "./users/reports.routes";
+import clientsRouter from "./users/client.routes";
 const router = Router();
 
 router.use("/auth", authRouter);
@@ -20,5 +21,8 @@ router.use("/reports", isAuth, reportsRouter);
 
 // admin routes
 router.use("/admin/users", isAuth, adminUsersRouter);
+
+// clients routes
+router.use("/clients", isAuth, clientsRouter);
 
 export default router;
