@@ -3,6 +3,7 @@ export type Transaction = {
   userID: string; // UUID
   type: 'ingreso' | 'egreso';
   description?: string;
+  clientID?: string; // UUID of the associated client
   category?: string;
   amount: number;
   hasVat: boolean;

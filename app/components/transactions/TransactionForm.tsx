@@ -17,6 +17,9 @@ import { Transaction } from '@/types/Transaction';
 import { z } from 'zod';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import ClientSelect from '../ui/ClientSelect';
+import { useClients } from '@/contexts/ClientsContext';
+import type Client from '@/types/Client';
 
 // Categorías predefinidas - idealmente vendrían de una API o configuración del usuario
 const CATEGORIES = [
@@ -38,6 +41,7 @@ const transactionSchema = z.object({
   hasVat: z.boolean(),
   vatRate: z.string(),
   date: z.date(),
+  clientID: z.string().optional(),
 });
 
 type TransactionFormData = z.infer<typeof transactionSchema>;
@@ -56,6 +60,9 @@ const TransactionForm: React.ForwardRefRenderFunction<
 > = ({ onSave, onCancel, initialValues }, ref) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
+  const [showClientSelect, setShowClientSelect] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const { clients } = useClients();
 
   const {
     control,
@@ -85,6 +92,15 @@ const TransactionForm: React.ForwardRefRenderFunction<
         },
   });
 
+  const clientID = watch('clientID');
+
+  React.useEffect(() => {
+    if (clientID) {
+      const client = clients.find(c => c.id === clientID);
+      if (client) setSelectedClient(client);
+    }
+  }, [clientID, clients]);
+
   const hasVat = watch('hasVat');
 
   const onSubmit = (data: TransactionFormData) => {
@@ -93,6 +109,7 @@ const TransactionForm: React.ForwardRefRenderFunction<
       amount: parseFloat(data.amount),
       vatRate: data.hasVat ? parseFloat(data.vatRate) : 0,
       date: moment(data.date).format('YYYY-MM-DD'),
+      clientID: data.clientID,
     });
   };
   return (
@@ -180,6 +197,60 @@ const TransactionForm: React.ForwardRefRenderFunction<
         {errors.amount && (
           <Text style={styles.errorText}>{errors.amount.message}</Text>
         )}
+      </View>
+
+      {/* Selector de cliente */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Cliente</Text>
+        <Controller
+          control={control}
+          name="clientID"
+          render={({ field: { value, onChange } }) => (
+            <>
+                <TouchableOpacity
+                  style={[styles.clientSelector]}
+                  onPress={() => setShowClientSelect(true)}
+                >
+                  {selectedClient ? (
+                    <View style={styles.selectedClientContainer}>
+                      <View style={styles.clientInfo}>
+                        <Text style={styles.clientName}>{selectedClient.name}</Text>
+                        <Text style={styles.clientEmail}>{selectedClient.email}</Text>
+                      </View>
+                      <FontAwesome5
+                        name="chevron-right"
+                        size={16}
+                        color={Colors.secondaryText}
+                      />
+                    </View>
+                  ) : (
+                    <View style={styles.placeholderContainer}>
+                      <FontAwesome5
+                        name="user"
+                        size={16}
+                        color={Colors.secondaryText}
+                      />
+                      <Text style={[styles.categoryText, { color: Colors.secondaryText }]}>
+                        Seleccionar cliente
+                      </Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+
+                <ClientSelect
+                  isVisible={showClientSelect}
+                  onClose={() => setShowClientSelect(false)}
+                  onSelect={(client) => {
+                    setSelectedClient(client);
+                    onChange(client.id);
+                    setShowClientSelect(false);
+                  }}
+                  clients={clients}
+                  title="Seleccionar Cliente"
+                />
+              </>
+          )}
+        />
       </View>
 
       {/* Campo de descripción */}
@@ -352,6 +423,17 @@ const TransactionForm: React.ForwardRefRenderFunction<
       >
         <Text style={styles.continueButtonText}>Guardar</Text>
       </TouchableOpacity>
+
+      <ClientSelect
+        isVisible={showClientSelect}
+        onClose={() => setShowClientSelect(false)}
+        onSelect={(client) => {
+          setSelectedClient(client);
+          setShowClientSelect(false);
+        }}
+        clients={clients}
+        title="Seleccionar Cliente"
+      />
     </ScrollView>
   );
 };
@@ -363,6 +445,48 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: Spacing.lg,
     paddingBottom: 150
+  },
+  clientSelector: {
+    backgroundColor: Colors.componentBg,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+    }),
+  },
+  selectedClientContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  clientInfo: {
+    flex: 1,
+  },
+  clientName: {
+    fontSize: Typography.size.md,
+    color: Colors.text,
+    fontWeight: '500',
+  },
+  clientEmail: {
+    fontSize: Typography.size.sm,
+    color: Colors.secondaryText,
+    marginTop: 2,
+  },
+  placeholderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  placeholderText: {
+    fontSize: Typography.size.md,
+    color: Colors.secondaryText,
   },
   continueButton: {
     backgroundColor: Colors.primary,
@@ -482,9 +606,6 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: Typography.size.md,
     color: Colors.text,
-  },
-  placeholderText: {
-    color: Colors.secondaryText,
   },
   categoriesList: {
     backgroundColor: Colors.componentBg,

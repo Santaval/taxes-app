@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Colors, Spacing } from '@/config/theme';
-import TransactionForm from '@/components/transactions/TransactionForm';
-import type { Transaction } from '@/types/Transaction';
 import { useTransactions } from '@/contexts/TransactionsContext';
 import ScreenLayout from '@/components/ui/ScreenLayout';
 import { useRouter } from 'expo-router';
+import type { Transaction } from '@/types/Transaction';
+import TransactionForm from '@/components/transactions/TransactionForm';
 // import { showInterstitialAd } from '@/components/Ads';
 
 export default function NewTransactionScreen() {
