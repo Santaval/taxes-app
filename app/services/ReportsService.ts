@@ -7,9 +7,9 @@ interface ApiErrorResponse {
   message: string;
 }
 
-type DateRangeConfig = {
-  from: Date;
-  to: Date;
+export interface DateRangeConfig {
+  from: string | Date;
+  to: string | Date;
 }
 
 export default class ReportsService {

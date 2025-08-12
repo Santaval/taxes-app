@@ -18,8 +18,8 @@ function useReport<K extends keyof ReportsDataMap = 'balance'>(reportType: K = '
         setError(null);
         try {
           const data = await ReportsService.get(reportType, {
-            from: range.from.toDate(),
-            to: range.to.toDate(),
+            from: range.from.toISOString(),
+            to: range.to.toISOString(),
           });
           setReportData(data);
         } catch (err) {

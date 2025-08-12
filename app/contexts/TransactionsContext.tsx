@@ -34,8 +34,8 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     setLoading(true);
     try {
       const config: TransactionRequestConfig = {
-        from: range.from,
-        to: range.to,
+        from: range.from.toISOString(),
+        to: range.to.toISOString(),
       }
       const transactions = await TransactionsService.all(config);
       setTransactions(transactions);
@@ -87,7 +87,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     if (user) { 
       fetchTransactions();
     }
-  }, [user, range]);
+  }, [user, range, fetchTransactions]);
 
   return (
     <TransactionsContext.Provider 
