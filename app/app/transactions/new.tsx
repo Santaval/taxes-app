@@ -6,7 +6,7 @@ import ScreenLayout from '@/components/ui/ScreenLayout';
 import { useRouter } from 'expo-router';
 import type { Transaction } from '@/types/Transaction';
 import TransactionForm from '@/components/transactions/TransactionForm';
-// import { showInterstitialAd } from '@/components/Ads';
+import { showInterstitialAd } from '@/components/Ads';
 
 export default function NewTransactionScreen() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function NewTransactionScreen() {
   const handleSave = async (transaction: Omit<Transaction, 'id' | 'userID' | 'createdAt'>) => {
     try {
       await createTransaction(transaction);
-      // await showInterstitialAd(); // Show ad after transaction is saved
+      await showInterstitialAd(); // Show ad after transaction is saved
       router.push('/(tabs)/transactions'); // Redirect to transactions list
     } catch (error) {
       // Manejar el error
