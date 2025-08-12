@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import TransactionModel from "../../models/transaction.model";
-import { NewTransactionSchema, UpdateTransactionSchema } from "../../schemas/transaction.schema";
+import {
+  NewTransactionSchema,
+  UpdateTransactionSchema,
+} from "../../schemas/transaction.schema";
 import { User } from "@/types/User";
 import moment from "moment";
 
@@ -18,7 +21,7 @@ export default class TransactionController {
       const transactions = await TransactionModel.all(
         month ? parseInt(month as string) : undefined,
         year ? parseInt(year as string) : undefined,
-        type as 'ingreso' | 'egreso' | undefined
+        type as "ingreso" | "egreso" | undefined
       );
       res.json(transactions);
     } catch (error) {
@@ -34,11 +37,15 @@ export default class TransactionController {
     try {
       const { id } = req.user as User;
       const { from, to } = req.query;
-      
+
       const config = {
-        from: moment(String(from)).isValid() ? moment(String(from)) : moment().startOf('month'),
-        to: moment(String(to)).isValid() ? moment(String(to)) : moment().endOf('month')
-      }
+        from: moment(String(from), "YYYY-MM-DD", true).isValid()
+          ? moment(String(from), "YYYY-MM-DD")
+          : moment().startOf("month"),
+        to: moment(String(to), "YYYY-MM-DD", true).isValid()
+          ? moment(String(to), "YYYY-MM-DD")
+          : moment().endOf("month"),
+      };
 
       const transactions = await TransactionModel.allByUser(id, config);
       res.json(transactions);
@@ -71,10 +78,10 @@ export default class TransactionController {
    */
   static async create(req: Request, res: Response) {
     try {
-      const { id } = req.user as User
+      const { id } = req.user as User;
       const transaction = await TransactionModel.create({
         ...req.body,
-        userID: id
+        userID: id,
       });
       res.status(201).json(transaction);
     } catch (error) {
@@ -92,7 +99,7 @@ export default class TransactionController {
       const { id: userID } = req.user as User;
       const result = await TransactionModel.update(id, {
         ...req.body,
-        userID 
+        userID,
       });
       res.json(result);
     } catch (error) {
