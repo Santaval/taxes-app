@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { router } from 'expo-router';
 import { showToast } from '@/utils/toast';
 import TransactionsService from '@/services/TransactionsService';
@@ -30,7 +30,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
   const expenses = transactions.filter(t => t.type === 'egreso');
   const incomes = transactions.filter(t => t.type === 'ingreso');
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     setLoading(true);
     try {
       const config: TransactionRequestConfig = {
@@ -46,7 +46,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [range]);
 
   const createTransaction = async (data: NewTransaction) => {
     try {
