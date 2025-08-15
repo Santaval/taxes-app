@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.savaldev.tributocr",
+      "bundleIdentifier": "com.santaval.taxes",
       "infoPlist": {
         "SKAdNetworkItems": [
           {
@@ -30,7 +30,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.savaldev.tributocr",
+      "package": "com.santaval.taxes",
       "permissions": [
         "INTERNET"
       ]
