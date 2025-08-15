@@ -9,7 +9,30 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/config/theme';
 
 export default function Transactions() {
-  const { transactions } = useTransactions();
+  const { transactions, error, loading } = useTransactions();
+  const [hasError, setHasError] = React.useState(false);
+
+  React.useEffect(() => {
+    if (error) {
+      setHasError(true);
+    }
+  }, [error]);
+
+  if (loading) {
+    return (
+      <ScreenLayout title='Transacciones'>
+        <Text>Cargando...</Text>
+      </ScreenLayout>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <ScreenLayout title='Transacciones'>
+        <Text>Error al cargar las transacciones</Text>
+      </ScreenLayout>
+    );
+  }
 
   return (
     <ScreenLayout
@@ -30,7 +53,11 @@ export default function Transactions() {
           <Text style={{ marginLeft: 8, color: Colors.white }}>Agregar</Text>
         </View>
       </Link>
-      <TransactionList transactions={transactions} />
+      {transactions && transactions.length > 0 ? (
+        <TransactionList transactions={transactions} />
+      ) : (
+        <Text>No hay transacciones</Text>
+      )}
     </ScreenLayout>
   );
 }
@@ -41,10 +68,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
     padding: 12,
-    borderRadius: 8,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    borderRadius: 8
   },
 });
