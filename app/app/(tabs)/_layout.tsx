@@ -1,9 +1,9 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/config/theme';
 
 export default function TabLayout() {
@@ -13,7 +13,6 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.primary,
         headerShown: false,
         tabBarButton: HapticTab,
-        // tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
@@ -30,7 +29,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='house.circle' color={color} />
+            <MaterialIcons name="home" size={28} color={color} />
           ),
         }}
       />
@@ -40,17 +39,17 @@ export default function TabLayout() {
         options={{
           title: 'Transacciones',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='paperplane.circle' color={color} />
+            <MaterialIcons name="swap-horiz" size={28} color={color} />
           ),
         }}
       />
 
-            <Tabs.Screen
+      <Tabs.Screen
         name='clients'
         options={{
           title: 'Clientes',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person.2.circle" color={color} />
+            <MaterialIcons name="people" size={28} color={color} />
           ),
         }}
       />
@@ -60,7 +59,7 @@ export default function TabLayout() {
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='person.circle' color={color} />
+            <MaterialIcons name="person" size={28} color={color} />
           ),
         }}
       />
