@@ -114,15 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.componentBg,
     borderRadius: BorderRadius.lg,
     marginBottom: Spacing.md,
-    padding: Spacing.md,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    padding: Spacing.md
   },
   iconContainer: {
     marginRight: Spacing.md,
