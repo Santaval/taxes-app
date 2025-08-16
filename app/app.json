@@ -2,13 +2,13 @@
   "expo": {
     "name": "TributoCR",
     "slug": "taxes-app",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-  "ios": {
+    "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.santaval.taxes",
       "infoPlist": {
@@ -38,7 +38,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
@@ -56,6 +56,14 @@
         {
           "androidAppId": "ca-app-pub-7662960136509590~9442018310",
           "iosAppId": "ca-app-pub-7662960136509590~4485221012"
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "tributocr",
+          "organization": "aaron-santana"
         }
       ]
     ],
