@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -43,13 +44,7 @@ export default function LoginScreen() {
         >
           {/* Logo y título */}
           <View style={styles.logoContainer}>
-            <FontAwesome5 
-              name="file-invoice-dollar" 
-              size={60} 
-              color={Colors.primary} 
-            />
-            <Text style={styles.title}>TributoCR</Text>
-            <Text style={styles.subtitle}>Tu asistente tributario</Text>
+             <Image source={require('@/assets/images/icon.png')} style={{ width: 200, height: 200, borderRadius: 40 }} />
           </View>
 
           {/* Formulario */}
