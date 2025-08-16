@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "150350828436",
+    "project_id": "tributocr",
+    "storage_bucket": "tributocr.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150350828436:android:05712097267a2528017581",
+        "android_client_info": {
+          "package_name": "com.santaval.taxes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhqi6waO6jYEvqp7sxy6IIGlISaFEQn8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
