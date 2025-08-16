@@ -9,6 +9,12 @@ dist/
 web-build/
 expo-env.d.ts
 
+# iOS
+ios-build/
+ios
+android-build/
+android
+
 # Native
 .kotlin/
 *.orig.*
@@ -41,3 +47,5 @@ app-example
 .env.local
 
 .env.local
+
+.vscode/
